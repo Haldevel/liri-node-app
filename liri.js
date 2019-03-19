@@ -38,12 +38,25 @@ inquirer
 
                     console.log("Spotifying Song " + inquirerResponse.song);
                     runSpotify(inquirerResponse.song);
-                   
+
                 });
 
         }
         else if (inquirerResponse.actions === "movie-this") {
-            console.log("movie-this")
+            console.log("movie-this");
+
+            // Include the axios npm package (Don't forget to run "npm install axios" in this folder first!)
+            var axios = require("axios");
+
+            // Then run a request with axios to the OMDB API with the movie specified
+            axios.get("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy")
+                .then(
+                    function (response) {
+                        console.log("The movie's rating is: " + response.data.imdbRating);
+                    }
+                );
+
+
         }
         else if (inquirerResponse.actions === "do-what-it-says") {
             // import fs
@@ -90,6 +103,8 @@ function runSpotify(songName) {
 
         //retrieve data for 3 songs
         for (var i = 0; i < 3; i++) {
+            console.log("--------------------------------------------------------------------------------");
+            console.log("Song # " + (i+1));
             console.log("--------------------------------------------------------------------------------");
             console.log("Artist: " + JSON.stringify(data.tracks.items[i].album.artists[0].name, null, 2));
             console.log("Name: " + JSON.stringify(data.tracks.items[i].name, null, 2));
