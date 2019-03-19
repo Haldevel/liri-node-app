@@ -37,30 +37,8 @@ inquirer
                 .then(function (inquirerResponse) {
 
                     console.log("Spotifying Song " + inquirerResponse.song);
-
-                    //connect to spotify api and get the data for 3 top songs
-
-                    //var spotify = new Spotify(keys.spotify);
-
                     runSpotify(inquirerResponse.song);
-
-                    /* //get three songs
-                    spotify.search({ type: 'track', query: inquirerResponse.song, limit: 3 }, function (err, data) {
-                        if (err) {
-                            return console.log('Error occurred: ' + err);
-                        }
-                    
-                        //retrieve data for 3 songs
-                        for (var i = 0; i < 3; i++) {
-                            console.log("--------------------------------------------------------------------------------");
-                            console.log("Artist: " + JSON.stringify(data.tracks.items[i].album.artists[0].name, null, 2));
-                            console.log("Name: " + JSON.stringify(data.tracks.items[i].name, null, 2));
-                            console.log("Preview URL: " + JSON.stringify(data.tracks.items[i].preview_url, null, 2));
-                            console.log("Album: " + JSON.stringify(data.tracks.items[i].album.name, null, 2));
-                            console.log("--------------------------------------------------------------------------------");
-                        }
-                    }); */
-
+                   
                 });
 
         }
@@ -73,7 +51,6 @@ inquirer
             var randomInput;
 
             // we will read from randon.txt
-
             fs.readFile("random.txt", "utf8", function (error, data) {
 
                 // If the code experiences any errors it will log the error to the console.
@@ -98,7 +75,6 @@ inquirer
                 */
 
             });
-
         }
     });
 
