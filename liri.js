@@ -49,36 +49,22 @@ inquirer
             console.log("movie-this");
 
             //Retrive the movie name via prompt here
+            inquirer.prompt([
+                {
+                    type: "input",
+                    message: "What movie do you want to check?",
+                    name: "movie",
+                    default: "Mr. Nobody"
 
+                },
+            ])
+                .then(function (inquirerResponse) {
+                    var movieTitle = inquirerResponse.movie;
+                    console.log("Getting info about " + movieTitle);
+                    //call the function which gets movie info via axios
+                    checkIMDB(movieTitle);
+                });
 
-            // Then run a request with axios to the OMDB API with the movie specified
-            axios.get("http://www.omdbapi.com/?t=remember+the+titans&y=&plot=short&apikey=trilogy")
-                .then(
-                    function (response) {
-                        console.log("--------------------------------------------------------------------------------");
-                        console.log("Title: "+ response.data.Title);
-                        console.log("Release Year: "+ response.data.Released);
-                        console.log("Country: "+ response.data.Country);
-                        console.log("The movie's IMDB rating is: " + response.data.imdbRating);
-                        console.log("The movie's Rotten Tomatoes rating is: " + response.data.Ratings[1].Value);
-                        console.log("Language: " + response.data.Language);
-                        console.log("Plot: " + response.data.Plot);
-                        console.log("Actors: " + response.data.Actors);
-                        console.log("--------------------------------------------------------------------------------");
-                        //console.log(response.data);
-
-                    }
-                );
-
-           /*      * Title of the movie.
-                * Year the movie came out.//
-                * IMDB Rating of the movie.//
-                * Rotten Tomatoes Rating of the movie.//
-                * Country where the movie was produced.//
-                * Language of the movie.
-                * Plot of the movie.
-                * Actors in the movie. */
-              
         }
         else if (inquirerResponse.actions === "do-what-it-says") {
             // import fs
@@ -138,6 +124,26 @@ function runSpotify(songName) {
 }
 
 
+function checkIMDB(title) {
+    // Then run a request with axios to the OMDB API with the movie specified
+    axios.get("http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy")
+        .then(
+            function (response) {
+                console.log("--------------------------------------------------------------------------------");
+                console.log("Title: " + response.data.Title);
+                console.log("Release Year: " + response.data.Released);
+                console.log("Country: " + response.data.Country);
+                console.log("The movie's IMDB rating is: " + response.data.imdbRating);
+                console.log("The movie's Rotten Tomatoes rating is: " + response.data.Ratings[1].Value);
+                console.log("Language: " + response.data.Language);
+                console.log("Plot: " + response.data.Plot);
+                console.log("Actors: " + response.data.Actors);
+                console.log("--------------------------------------------------------------------------------");
+
+            }
+        );
+
+}
 
 
 
