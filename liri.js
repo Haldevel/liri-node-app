@@ -2,15 +2,15 @@ require("dotenv").config();
 
 var Spotify = require('node-spotify-api');
 
-// Load the NPM Package inquirer
 var inquirer = require("inquirer");
 
-// Include the axios package
 var axios = require("axios");
 
 var keys = require("./keys.js");
 
-// Create a "Prompt" with a series of questions.
+var moment = require('moment');
+
+// Create a Prompt with a list of options
 inquirer
     .prompt([
         {
@@ -22,8 +22,24 @@ inquirer
         },
     ])
     .then(function (inquirerResponse) {
-        if (inquirerResponse.actions === "concert-this") {
-            console.log("bands")
+        if (inquirerResponse.actions === "concert-this") { //if the concert-this option was picked
+            console.log("bands");
+
+            axios.get("https://rest.bandsintown.com/artists/pink+martini/events?app_id=codingbootcamp")
+                .then(
+                    function (response) {
+
+                        for (var i = 0; i < 10; i++) {
+                            console.log("--------------------------------------------------------------------------------");
+                            console.log("Performer: " + response.data[i].lineup[0]);
+                            console.log("Venue Name: " + response.data[i].venue.name);
+                            console.log("Venue Location: " + response.data[i].venue.city + " " + response.data[i].venue.region + " " + response.data[i].venue.country);
+                            console.log("Date: " + moment(response.data[i].datetime).format("MM/DD/YYYY"));
+                            console.log("--------------------------------------------------------------------------------");
+                        }
+
+                    }
+                );
         }
         else if (inquirerResponse.actions === "spotify-this-song") {
             console.log("spotify");
@@ -69,7 +85,6 @@ inquirer
         else if (inquirerResponse.actions === "do-what-it-says") {
             // import fs
             var fs = require("fs");
-            //var randomInput;
 
             // we will read from randon.txt
             fs.readFile("random.txt", "utf8", function (error, data) {
@@ -125,7 +140,7 @@ function runSpotify(songName) {
 
 
 function checkIMDB(title) {
-    // Then run a request with axios to the OMDB API with the movie specified
+    // Then run a request with axios to the IMDB API with the movie specified
     axios.get("http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy")
         .then(
             function (response) {
