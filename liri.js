@@ -41,7 +41,7 @@ inquirer
                     }
                 );
         }
-        else if (inquirerResponse.actions === "spotify-this-song") {
+        else if (inquirerResponse.actions === "spotify-this-song") { //if spotify-this-son option is picked
             console.log("spotify");
             //get a song name from a user
             inquirer.prompt([
@@ -61,7 +61,7 @@ inquirer
                 });
 
         }
-        else if (inquirerResponse.actions === "movie-this") {
+        else if (inquirerResponse.actions === "movie-this") { //if the movie option was picked
             console.log("movie-this");
 
             //Retrive the movie name via prompt here
