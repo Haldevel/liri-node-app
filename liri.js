@@ -179,15 +179,12 @@ function checkOMDB(title) {
 
 //function to look for concerts using bandsintown api and axios
 function giveConcerts(performer) {
-    console.log("inside "+ performer);
     axios.get("https://rest.bandsintown.com/artists/" + performer + "/events?app_id=codingbootcamp")
         .then(
             function (response) {
                 for (var i = 0; i < 10; i++) {
-                    console.log("10 " + JSON.stringify(response.data, null, 2));
                     console.log("--------------------------------------------------------------------------------");
-                    //console.log("Performer: " + response.data[i].lineup[0]);
-                    console.log('20')
+                    console.log("Performer: " + response.data[i].lineup[0]);
                     console.log("Venue Name: " + response.data[i].venue.name);
                     console.log("Venue Location: " + response.data[i].venue.city + " " + response.data[i].venue.region + " " + response.data[i].venue.country);
                     console.log("Date: " + moment(response.data[i].datetime).format("MM/DD/YYYY"));
