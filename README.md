@@ -27,3 +27,11 @@ If the user enters no title, three top "The Sign" Ace of Base tracks will be sho
 If the user picks <movie-this> option, the program will ask for the movie title to search and will use "Mr. Nobody" if the user enetyer nothing:
 
 ![OMDB Movie API default search results](images/ScreenShot_7.png)
+
+If the user eneter the movie's name, the program will fetch the information about the movie and print in to console:
+
+![OMDB Movie API default search results](images/ScreenShot_8.png)
+
+If the user picks the last option <do-what-it-says>, the program will read the song's name from "random.txt" file, and use spotify to search the song's data and display the top 3 records:  
+
+![Do-what-it-says default song's results](images/ScreenShot_9.png)
