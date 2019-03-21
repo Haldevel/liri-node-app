@@ -9,6 +9,8 @@ var keys = require("./keys.js");
 var moment = require('moment');
 var fs = require("fs");
 
+var testPerformer;
+
 // Create a Prompt with a list of options
 inquirer
     .prompt([
@@ -62,7 +64,7 @@ inquirer
 
         }
         else if (inquirerResponse.actions === "movie-this") { //if the movie option was picked
-            console.log("movie-this");
+            //console.log("movie-this");
 
             //Retrive the movie name via prompt here
             inquirer.prompt([
@@ -92,10 +94,21 @@ inquirer
                     return console.log(error);
                 }
 
-                // Split the data by commas
-                var dataArr = data.split(",");
+                // Split the data first by ';' and then by ',' to test the app
+                var dataArr = data.split(";");
+                for (var i = 0; i < dataArr.length; i++) {
 
-                runSpotify(dataArr[1]); //calls the function to use spotify api and passes the song's title
+                    var line = dataArr[i].split(",")
+                    if(line[0].trim() === "spotify-this-song") {
+                        runSpotify(line[1]);                       
+                    }                   
+                    else if(line[0].trim() === "concert-this") {
+                        giveConcerts(testPerformer);
+                    }
+                    else if(line[0].trim() === "movie-this") {
+                        checkOMDB(line[1]);
+                    } 
+                }
             });
         }
     });
@@ -166,12 +179,15 @@ function checkOMDB(title) {
 
 //function to look for concerts using bandsintown api and axios
 function giveConcerts(performer) {
+    console.log("inside "+ performer);
     axios.get("https://rest.bandsintown.com/artists/" + performer + "/events?app_id=codingbootcamp")
         .then(
             function (response) {
                 for (var i = 0; i < 10; i++) {
+                    console.log("10 " + JSON.stringify(response.data, null, 2));
                     console.log("--------------------------------------------------------------------------------");
-                    console.log("Performer: " + response.data[i].lineup[0]);
+                    //console.log("Performer: " + response.data[i].lineup[0]);
+                    console.log('20')
                     console.log("Venue Name: " + response.data[i].venue.name);
                     console.log("Venue Location: " + response.data[i].venue.city + " " + response.data[i].venue.region + " " + response.data[i].venue.country);
                     console.log("Date: " + moment(response.data[i].datetime).format("MM/DD/YYYY"));
